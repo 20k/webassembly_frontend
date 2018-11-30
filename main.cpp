@@ -63,6 +63,16 @@ int main(int argc, char* argv[])
         return 1;
     }
 
+    auto it = file.find_last_of('.');
+
+    if(it == std::string::npos)
+    {
+        printf("No file extension?");
+        return 1;
+    }
+
+    std::string root_name(file.begin(), file.begin() + it);
+
     std::string path = "./compile/";
 
     mkdir(path.c_str());
@@ -94,6 +104,8 @@ int main(int argc, char* argv[])
 
         ///data left in "fname.wasm"
 
+        copy_file(fname + ".wasm", root_name + ".wasm");
+
         return 0;
     }
 
@@ -116,6 +128,8 @@ int main(int argc, char* argv[])
         std::string to_exec = "node compile_js.js " + current_filename;
 
         system(to_exec.c_str());
+
+        copy_file(fname + ".ts.wasm", root_name + ".wasm");
 
         ///data left in name.js.wasm
     }
