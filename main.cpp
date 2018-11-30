@@ -95,21 +95,17 @@ int main(int argc, char* argv[])
         std::string llc2 = "c:/cllvm2/bin/llc -march=wasm32 " + fname + ".bc -o " + fname + ".s";
         std::string lld = "c:/cllvm2/bin/lld -flavor wasm --export-all --allow-undefined " + fname + ".o -o " + fname + ".wasm -LC:/cllvm2/lib -lc --no-entry";
 
-        std::cout << clang << "\n" << llc1 << "\n" << llc2 << "\n" << lld << "\n";
-
         system(clang.c_str());
         system(llc1.c_str());
         system(llc2.c_str());
         system(lld.c_str());
-
-        ///data left in "fname.wasm"
 
         copy_file(fname + ".wasm", root_name + ".wasm");
 
         return 0;
     }
 
-    if(ends_with(new_file, ".js") || ends_with(new_file, ".ts"))
+    else if(ends_with(new_file, ".js") || ends_with(new_file, ".ts"))
     {
         auto last = new_file.find_last_of('.');
 
@@ -130,8 +126,11 @@ int main(int argc, char* argv[])
         system(to_exec.c_str());
 
         copy_file(fname + ".ts.wasm", root_name + ".wasm");
-
-        ///data left in name.js.wasm
+    }
+    else
+    {
+        printf("unknown filetype");
+        return 1;
     }
 
     return 0;
