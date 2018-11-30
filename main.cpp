@@ -109,7 +109,7 @@ int main(int argc, char* argv[])
 
         std::string fname(new_file.begin(), new_file.begin() + last);
 
-        std::string clang = "c:/cllvm2/bin/clang -emit-llvm --target=wasm32 -O3 " + new_file + " -c -o " + fname + ".bc --sysroot=C:/cllvm2 -IC:/cllvm2/gameapi -std=gnu++17 -D_LIBCPP_HAS_MUSL_LIBC";
+        std::string clang = "c:/cllvm2/bin/clang -emit-llvm --target=wasm32 -O3 " + new_file + " -c -o " + fname + ".bc --sysroot=C:/cllvm2 -IC:/cllvm2/gameapi -fno-exceptions -std=gnu++17 -D_LIBCPP_HAS_MUSL_LIBC";
         //std::string clang = "c:/cllvm2/bin/clang -emit-llvm --target=wasm32 -O3 " + new_file + " -c -o " + fname + ".bc -IC:/cllvm2/include/c++/v1 -IC:/cllvm2/include -IC:/cllvm2/gameapi -std=gnu++17";
         std::string llc1 = "c:/cllvm2/bin/llc -march=wasm32 -filetype=obj " + fname + ".bc -o " + fname + ".o";
         std::string llc2 = "c:/cllvm2/bin/llc -march=wasm32 " + fname + ".bc -o " + fname + ".s";
