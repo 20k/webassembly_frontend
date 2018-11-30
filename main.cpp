@@ -77,6 +77,19 @@ int main(int argc, char* argv[])
         return 1;
     }
 
+    if(!file_exists("check.TOUCH"))
+    {
+        system("git clone https://github.com/AssemblyScript/assemblyscript jsasm");
+
+        system("npm install --save-dev jsasm");
+
+        system("npx asinit .");
+
+        system("npm run asbuild");
+
+        write_all_bin("check.TOUCH", "1");
+    }
+
     std::string root_name(file.begin(), file.begin() + it);
 
     std::string path = "./compile/";
