@@ -47,6 +47,11 @@ void copy_file(const std::string& f1, const std::string& f2)
     write_all_bin(f2, read_file_bin(f1));
 }
 
+void remove(const std::string& str)
+{
+    ::remove(str.c_str());
+}
+
 int main(int argc, char* argv[])
 {
     if(argc <= 1)
@@ -56,6 +61,7 @@ int main(int argc, char* argv[])
     }
 
     std::string file = argv[1];
+    bool cleanup = argc == 2;
 
     if(!file_exists(file))
     {
@@ -102,6 +108,16 @@ int main(int argc, char* argv[])
 
         copy_file(fname + ".wasm", root_name + ".wasm");
 
+        if(cleanup)
+        {
+            remove(fname + ".wasm");
+            remove(fname + ".bc");
+            remove(fname + ".cpp");
+            remove(fname + ".c");
+            remove(fname + ".s");
+            remove(fname + ".o");
+        }
+
         return 0;
     }
 
@@ -126,6 +142,15 @@ int main(int argc, char* argv[])
         system(to_exec.c_str());
 
         copy_file(fname + ".ts.wasm", root_name + ".wasm");
+
+        if(cleanup)
+        {
+            remove(fname + ".wasm");
+            remove(fname + ".js");
+            remove(fname + ".ts");
+            remove(fname + ".ts.wasm");
+            remove(fname + ".ts.wasm.map");
+        }
     }
     else
     {
